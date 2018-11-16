@@ -285,6 +285,31 @@ var dav = {
         //This example implementation is using the standard address book, but you may use another one
         let abManager = Components.classes["@mozilla.org/abmanager;1"].getService(Components.interfaces.nsIAbManager);
 
+        if (tbSync.cardbook == true) {
+            let accountID = cardbookUtils.getUUID();
+            
+            cardbookRepository.addAccountToRepository(
+                    /* aAccountId */ accountID,
+                    /* aAccountName */ newname, 
+                    /* aAccountType */ "TBSYNC:EAS", 
+                    /* aAccountUrl */ "", 
+                    /* aAccountUser */ "", 
+                    /* aColor */ "#ff0000", 
+                    /* aEnabled */ true, 
+                    /* aExpanded */ true, 
+                    /* aVCard */ ["3.0"], 
+                    /* aReadOnly */ false, 
+                    /* aUrnuuid */ false,
+                    /* aDBcached */ true, 
+                    /* aAutoSyncEnabled */ false, 
+                    /* aAutoSyncInterval */ 0, 
+                    /* aPrefInsertion */ true               
+            );
+            cardbookUtils.formatStringForOutput("addressbookCreated", [newname]);
+            wdw_cardbooklog.addActivity("addressbookCreated", [newname], "addItem");
+            cardbookUtils.notifyObservers("cardbook.ABAddedDirect", "accountid:" + accountID);
+        }
+        
         return abManager.newAddressBook(newname, "", 2);
     },
 
