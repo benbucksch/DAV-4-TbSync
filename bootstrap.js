@@ -25,7 +25,7 @@ let onInitDoneObserver = {
         
         //load this provider add-on into TbSync
         if (valid) {
-            yield tbSync.loadProvider(thisID, "dav", "//dav4tbsync/content/dav.js");
+            yield tbSync.registerProvider(thisID, "dav", "//dav4tbsync/content/dav.js");
         }
     })
 }
